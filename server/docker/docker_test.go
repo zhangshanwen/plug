@@ -18,6 +18,7 @@ func TestDocker(t *testing.T) {
 	//if err != nil {
 	//	panic(err)
 	//}
-	//io.Copy(os.Stdout, reader)
+	//io.Copy(os.Stdout, reader)a
+	Docker.ContainerList()
 
 }

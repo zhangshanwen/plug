@@ -1,0 +1,47 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/zhangshanwen/plug/proto";
+import "proto/base.proto";
+service  Container {
+    rpc ContainerList(ContainerListRequest) returns (ContainerListReply) {}
+}
+
+message  ContainerListRequest {
+    bool Quiet = 1;
+    bool Size = 2;
+    bool All = 3;
+    bool Latest = 4;
+    string Since = 5;
+    string Before = 6;
+    int32  Limit = 7;
+    repeated MapFieldEntry filters = 8;    // filter
+}
+message ContainerListEntry {
+    string ID = 1;
+    repeated string Names = 2;
+    string Image = 3;
+    string ImageID = 4;
+    string Command = 5;
+    int64 Created = 6;
+    repeated Port Ports = 7;
+    int64 SizeRw = 8;
+    int64 SizeRootFs = 9;
+    repeated proto.MapFieldEntry Labels = 10;
+    string State = 11;
+    string Status = 12;
+    HostConfig HostConfig = 13;
+}
+
+message Port {
+    string  IP = 1;
+    uint32 PrivatePort = 2;
+    uint32 PublicPort = 3;
+    string  type = 4;
+}
+message HostConfig {
+    string NetworkMode = 1;
+}
+message ContainerListReply {
+    repeated ContainerListEntry list = 1;
+}
+

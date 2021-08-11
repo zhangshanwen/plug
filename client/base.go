@@ -5,7 +5,6 @@ import (
 	"google.golang.org/grpc/keepalive"
 
 	"google.golang.org/grpc"
-	"log"
 	"time"
 )
 
@@ -30,7 +29,6 @@ func New(ctx context.Context, dialTimeOut time.Duration, address string) (c Clie
 	c.Ctx, c.cel = context.WithTimeout(ctx, dialTimeOut)
 	c.Conn, err = grpc.DialContext(c.Ctx, address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
 		return
 	}
 	return
@@ -39,7 +37,6 @@ func NewKeep(ctx context.Context, dialTimeOut time.Duration, address string) (c 
 	c.Ctx, c.cel = context.WithTimeout(ctx, dialTimeOut)
 	c.Conn, err = grpc.Dial(address, grpc.WithInsecure(), grpc.WithKeepaliveParams(kacp))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
 		return
 	}
 	return
@@ -50,7 +47,6 @@ func (c *Client) Default() (err error) {
 	c.Ctx, c.cel = context.WithTimeout(context.Background(), defaultTimeOut)
 	c.Conn, err = grpc.DialContext(c.Ctx, defaultAddress, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
 		return
 	}
 	return

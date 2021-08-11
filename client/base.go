@@ -11,8 +11,8 @@ import (
 
 type Client struct {
 	cel  context.CancelFunc
-	ctx  context.Context
-	conn *grpc.ClientConn
+	Ctx  context.Context
+	Conn *grpc.ClientConn
 }
 
 const (
@@ -27,8 +27,8 @@ var kacp = keepalive.ClientParameters{
 }
 
 func New(ctx context.Context, dialTimeOut time.Duration, address string) (c Client, err error) {
-	c.ctx, c.cel = context.WithTimeout(ctx, dialTimeOut)
-	c.conn, err = grpc.DialContext(c.ctx, address, grpc.WithInsecure(), grpc.WithBlock())
+	c.Ctx, c.cel = context.WithTimeout(ctx, dialTimeOut)
+	c.Conn, err = grpc.DialContext(c.Ctx, address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 		return
@@ -36,8 +36,8 @@ func New(ctx context.Context, dialTimeOut time.Duration, address string) (c Clie
 	return
 }
 func NewKeep(ctx context.Context, dialTimeOut time.Duration, address string) (c Client, err error) {
-	c.ctx, c.cel = context.WithTimeout(ctx, dialTimeOut)
-	c.conn, err = grpc.Dial(address, grpc.WithInsecure(), grpc.WithKeepaliveParams(kacp))
+	c.Ctx, c.cel = context.WithTimeout(ctx, dialTimeOut)
+	c.Conn, err = grpc.Dial(address, grpc.WithInsecure(), grpc.WithKeepaliveParams(kacp))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 		return
@@ -47,8 +47,8 @@ func NewKeep(ctx context.Context, dialTimeOut time.Duration, address string) (c 
 }
 
 func (c *Client) Default() (err error) {
-	c.ctx, c.cel = context.WithTimeout(context.Background(), defaultTimeOut)
-	c.conn, err = grpc.DialContext(c.ctx, defaultAddress, grpc.WithInsecure(), grpc.WithBlock())
+	c.Ctx, c.cel = context.WithTimeout(context.Background(), defaultTimeOut)
+	c.Conn, err = grpc.DialContext(c.Ctx, defaultAddress, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 		return
@@ -58,6 +58,6 @@ func (c *Client) Default() (err error) {
 
 func (c *Client) Close() {
 	defer c.cel()
-	defer c.conn.Close()
+	defer c.Conn.Close()
 
 }

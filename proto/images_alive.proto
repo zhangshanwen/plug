@@ -1,0 +1,19 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/zhangshanwen/plug/proto";
+service  ImageAlive {
+    rpc ImagePull(ImagePullRequest) returns (stream ImagePullReply) {}
+}
+
+
+message  ImagePullRequest {
+    string RefStr = 1;
+    bool All = 2;
+    string RegistryAuth = 3;
+    string Platform = 4;
+
+}
+message  ImagePullReply {
+    bytes  body = 1;
+}
+

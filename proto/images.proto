@@ -1,0 +1,66 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/zhangshanwen/plug/proto";
+import "proto/base.proto";
+service  Image {
+    rpc ImageList(ImageListRequest) returns (ImageListReply) {}
+    rpc ImageHistory(ImageHistoryRequest) returns (ImageHistoryReply) {}
+    rpc ImageSearch(ImageSearchRequest) returns (ImageSearchReply) {}
+}
+
+message  ImageListRequest {
+    bool All = 1;                          // 是否全部
+    repeated MapFieldEntry filters = 2;    // filter
+}
+message ImageListEntry {
+    int64  Containers = 1;
+    int64  Created = 2;
+    string ID = 3;
+    repeated MapFieldEntry Labels = 4;
+    repeated string ParentID = 5;
+    repeated string RepoTags = 6;
+    int64 SharedSize = 7;
+    int64 Size = 8;
+    int64 VirtualSize = 9;
+}
+
+message ImageListReply {
+    repeated ImageListEntry list = 1;
+}
+
+message  ImageHistoryRequest {
+    string ImageID = 1;
+}
+message  ImageHistoryReply {
+    repeated ImageHistoryEntry  list = 1;
+}
+
+message ImageHistoryEntry {
+    string Comment = 1;
+    int64  Created = 2;
+    string CreatedBy = 3;
+    string ID = 4;
+    int64 Size = 5;
+    repeated string Tags = 6;
+}
+
+
+message  ImageSearchRequest {
+    string Term = 1;
+    repeated MapFieldEntry filters = 2;    // filter
+    string RegistryAuth = 3;
+    int32 Limit = 4;
+
+}
+message  ImageSearchReply {
+    repeated ImageSearchEntry  list = 1;
+}
+
+message ImageSearchEntry {
+    int32 StarCount = 1;
+    bool IsOfficial = 2;
+    string Name = 3;
+    bool IsAutomated = 4;
+    string Description = 5;
+}
+

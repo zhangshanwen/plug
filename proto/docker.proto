@@ -1,0 +1,24 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/zhangshanwen/plug/proto";
+
+service  Docker {
+    rpc Ping(PingRequest) returns (PingReply) {}
+    rpc Info(InfoRequest) returns (InfoReply) {}
+}
+
+message PingRequest {
+}
+
+message PingReply {
+    string APIVersion = 1;
+    string OSType = 2;
+    bool Experimental = 3;
+    string BuilderVersion = 4;
+}
+message InfoRequest {
+}
+
+message InfoReply {
+    bytes  Info = 1;
+}

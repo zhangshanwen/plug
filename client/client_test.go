@@ -16,7 +16,7 @@ func TestGetImages(t *testing.T) {
 		t.Fatalf("new client err:%v", err)
 	}
 	defer c.Close()
-	pbc := pb.NewImageClient(c.conn)
+	pbc := pb.NewImageClient(c.Conn)
 	images, err := pbc.ImageList(ctx, &pb.ImageListRequest{All: true})
 	if err != nil {
 		t.Fatalf("get images  err:%v", err)
@@ -31,7 +31,7 @@ func TestInfo(t *testing.T) {
 		t.Fatalf("new client err:%v", err)
 	}
 	defer c.Close()
-	pbc := pb.NewDockerClient(c.conn)
+	pbc := pb.NewDockerClient(c.Conn)
 	images, err := pbc.Info(ctx, &pb.InfoRequest{})
 	if err != nil {
 		t.Fatalf("get info err:%v", err)
@@ -51,7 +51,7 @@ func TestImagePull(t *testing.T) {
 		t.Fatalf("new client err:%v", err)
 	}
 	defer c.Close()
-	pbc := pb.NewImageAliveClient(c.conn)
+	pbc := pb.NewImageAliveClient(c.Conn)
 	stream, err := pbc.ImagePull(ctx, &pb.ImagePullRequest{RefStr: "mysql"})
 	if err != nil {
 		log.Fatalf("ImagePullRequest err  %v", err)

@@ -1,4 +1,4 @@
-all: vet test testrace
+all: run
 dir="./bin"
 build:
 	go build -o ./bin/server ./server/cmd/main.go
